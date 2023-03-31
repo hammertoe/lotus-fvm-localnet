@@ -1,4 +1,5 @@
 name: lotus-fvm-localnet-base
+runs-on: self-hosted
 
 on:
   push:
