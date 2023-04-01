@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.4
 
-FROM ghcr.io/hammertoe/lotus-fvm-localnet-lite@sha256:739cb2f57c0b1233426f50b3b87459ede0a73f0dfac0faf9da74144843f5758e
+FROM ghcr.io/hammertoe/lotus-fvm-localnet-lite@sha256:c1317e19aa252f8aecbfc6e45344da99c7a376c3200f691638467a4bce4a5e80
 
 USER root
 
