@@ -17,10 +17,7 @@ env:
 
 jobs:
   run-build-and-push-oci-image:
-    strategy:
-      matrix:
-        arch: [amd64, arm64]
-    runs-on: ${{ matrix.arch }}
+    runs-on: self-hosted
     permissions:
       contents: write
       packages: write
@@ -49,7 +46,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          platforms: linux/${{ matrix.arch }}
+          platforms: linux/amd64, linux/arm64
           file: Dockerfile-lite
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
