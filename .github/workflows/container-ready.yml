@@ -44,9 +44,9 @@ jobs:
       - name: Build and push
         id: build
         uses: docker/build-push-action@v4
-        platforms: linux/amd64,linux/arm64
         with:
           context: .
+          platforms: linux/amd64,linux/arm64
           file: Dockerfile-ready
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
