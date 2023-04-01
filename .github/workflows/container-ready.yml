@@ -17,10 +17,10 @@ env:
 
 jobs:
   run-build-and-push-oci-image:
-    runs-on: self-hosted
     strategy:
       matrix:
         arch: [amd64, arm64]
+    runs-on: self-hosted ${{ matrix.arch }}
     permissions:
       contents: write
       packages: write
