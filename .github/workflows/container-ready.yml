@@ -20,7 +20,7 @@ jobs:
     strategy:
       matrix:
         arch: [amd64, arm64]
-    runs-on: [self-hosted, ${{ matrix.arch }}]
+    runs-on: ${{ matrix.arch }}
     permissions:
       contents: write
       packages: write
