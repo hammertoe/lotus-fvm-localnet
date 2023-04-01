@@ -68,6 +68,7 @@ jobs:
           set -x
           git config --global user.name 'update-image-hash'
           git config --global user.email 'nobody@jimpick.com'
+          git config --global pull.rebase false
           git status
           git add Dockerfile-lite
           if [ -n "$(git status --porcelain)" ]; then
