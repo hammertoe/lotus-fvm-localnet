@@ -20,8 +20,8 @@ RUN <<'eot' bash
 
        # Setup miner
 	
-       sleep 120 
-       ./lotus wait-api
+       sleep 60 
+       ./lotus wait-api -- timeout 600
        ./lotus wallet import --as-default ~/.genesis-sectors/pre-seal-t01000.key
 
        ./lotus-miner init \
