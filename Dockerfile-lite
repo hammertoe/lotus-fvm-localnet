@@ -43,6 +43,7 @@ RUN chown -R ubuntu. /var/tmp
 
 USER ubuntu
 
+RUN chmod +x ./patch-config.sh
 RUN ./patch-config.sh
 
 ENV LOTUS_PATH="~/.lotus-local-net"
