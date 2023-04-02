@@ -19,7 +19,8 @@ FROM ubuntu
 RUN useradd ubuntu
 
 RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata systemd systemd-sysv dbus dbus-user-session
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata
+RUN apt-get install -y systemd systemd-sysv dbus dbus-user-session
 
 RUN apt install -y mesa-opencl-icd jq curl hwloc 
 RUN apt install -y vim less htop
