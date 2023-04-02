@@ -8,22 +8,13 @@ USER root
 
 WORKDIR /home/ubuntu/lotus
 
-RUN apt-get install -y systemd systemd-sysv dbus dbus-user-session
-
-RUN echo 'root:root' | chpasswd
-RUN printf '#!/bin/sh\nexit 0' > /usr/sbin/policy-rc.d
-
-# Enable systemd init system
-STOPSIGNAL SIGRTMIN+3
-CMD ["/sbin/init"]
-
-RUN make install install-daemon-service install-miner-service
+RUN make install
 RUN cp ./lotus-seed /usr/local/bin
 RUN cp ./lotus-shed /usr/local/bin
 
 # Copy to new image
 
-FROM ubuntu
+FROM systemd-ubuntu
 
 RUN useradd ubuntu
 
@@ -53,11 +44,11 @@ COPY --chown=ubuntu:ubuntu patch-config.sh patch-config.sh
 RUN chown -R ubuntu. /home/ubuntu
 RUN chown -R ubuntu. /var/tmp
 
-RUN systemctl daemon-reload
-RUN systemctl start lotus-daemon
-RUN systemctl enable lotus-daemon
-RUN systemctl start lotus-miner
-RUN systemctl enable lotus-miner
+#RUN systemctl daemon-reload
+#RUN systemctl start lotus-daemon
+#RUN systemctl enable lotus-daemon
+#RUN systemctl start lotus-miner
+#RUN systemctl enable lotus-miner
 
 USER ubuntu
 
