@@ -8,6 +8,12 @@ USER root
 
 WORKDIR /home/ubuntu/lotus
 
+
+RUN echo 'root:root' | chpasswd
+RUN printf '#!/bin/sh\nexit 0' > /usr/sbin/policy-rc.d
+
+ENTRYPOINT ["/sbin/init"]
+
 RUN apt-get install -y systemd systemd-sysv dbus dbus-user-session
 
 RUN make install install-daemon-service install-miner-service
@@ -27,12 +33,6 @@ RUN apt install -y mesa-opencl-icd jq curl hwloc
 RUN apt install -y vim less htop
 
 RUN apt upgrade -y
-
-RUN echo 'root:root' | chpasswd
-RUN printf '#!/bin/sh\nexit 0' > /usr/sbin/policy-rc.d
-
-ENTRYPOINT ["/sbin/init"]
-
 
 ENV PATH="/usr/local/go/bin:${PATH}"
 
