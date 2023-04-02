@@ -14,7 +14,7 @@ RUN cp ./lotus-shed /usr/local/bin
 
 # Copy to new image
 
-FROM systemd-ubuntu
+FROM ubuntu
 
 RUN useradd ubuntu
 
@@ -43,12 +43,6 @@ COPY --chown=ubuntu:ubuntu patch-config.sh patch-config.sh
 
 RUN chown -R ubuntu. /home/ubuntu
 RUN chown -R ubuntu. /var/tmp
-
-#RUN systemctl daemon-reload
-#RUN systemctl start lotus-daemon
-#RUN systemctl enable lotus-daemon
-#RUN systemctl start lotus-miner
-#RUN systemctl enable lotus-miner
 
 USER ubuntu
 
