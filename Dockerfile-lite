@@ -8,13 +8,14 @@ USER root
 
 WORKDIR /home/ubuntu/lotus
 
+RUN apt-get install -y systemd systemd-sysv dbus dbus-user-session
 
 RUN echo 'root:root' | chpasswd
 RUN printf '#!/bin/sh\nexit 0' > /usr/sbin/policy-rc.d
 
-ENTRYPOINT ["/sbin/init"]
-
-RUN apt-get install -y systemd systemd-sysv dbus dbus-user-session
+# Enable systemd init system
+STOPSIGNAL SIGRTMIN+3
+CMD ["/sbin/init"]
 
 RUN make install install-daemon-service install-miner-service
 RUN cp ./lotus-seed /usr/local/bin
