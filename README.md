@@ -1,7 +1,40 @@
-lotus-fvm-localnet
+Lotus FVM Localnet
 ===
 
 [![lotus-fvm-localnet-auto](https://github.com/hammertoe/lotus-fvm-localnet/actions/workflows/container-auto.yml/badge.svg)](https://github.com/hammertoe/lotus-fvm-localnet/actions/workflows/container-auto.yml)
+
+# Quickstart
+
+Using docker, you can start up a combined node and miner with a single command:
+
+```
+docker run -it -p 1234:1234 --name filecoin-localnet ghcr.io/hammertoe/lotus-fvm-localnet-auto
+```
+
+Configure your metamask with the following network settings:
+
+```
+Network name: Filecoin Localnet
+RPC URL: http://127.0.0.1:1234/rpc/v1
+Chain ID: 31415926
+Currency symbol: tFIL
+```
+
+Convert your 0x address into an F4 address:
+
+```
+docker exec -it filecoin-localnet lotus evm stat 0x6B9cd26E5238B1eB528dB0f78bE86c8804cB0AF7 
+```
+
+Transfer from tFIL from the genesis account to your metamask account using the F4 address obtained above:
+
+```
+docker exec -it filecoin-localnet lotus send t410fnoone3sshcy6wuunwd3yx2dmracmwcxxnbkcusq 1000
+```
+
+in about 30 seconds you will now have 1,000 tFIL showing in metamask
+
+# Details
 
 Builds a container image with a development branch of Lotus (experimental/fvm-m2)
 for running a localnet in a container for FVM experimentation.
