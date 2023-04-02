@@ -8,7 +8,7 @@ USER root
 
 WORKDIR /home/ubuntu/lotus
 
-RUN make install
+RUN make install install-daemon-service install-miner-service
 RUN cp ./lotus-seed /usr/local/bin
 RUN cp ./lotus-shed /usr/local/bin
 
@@ -19,12 +19,18 @@ FROM ubuntu
 RUN useradd ubuntu
 
 RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata systemd systemd-sysv dbus dbus-user-session
 
 RUN apt install -y mesa-opencl-icd jq curl hwloc 
 RUN apt install -y vim less htop
 
 RUN apt upgrade -y
+
+RUN echo 'root:root' | chpasswd
+RUN printf '#!/bin/sh\nexit 0' > /usr/sbin/policy-rc.d
+
+ENTRYPOINT ["/sbin/init"]
+
 
 ENV PATH="/usr/local/go/bin:${PATH}"
 
@@ -36,10 +42,19 @@ COPY --from=build /home/ubuntu/.lotus-local-net /home/ubuntu/.lotus-local-net
 COPY --from=build /home/ubuntu/.lotus-miner-local-net /home/ubuntu/.lotus-miner-local-net
 COPY --from=build /var/tmp/filecoin-proof-parameters /var/tmp/filecoin-proof-parameters
 COPY --from=build /var/tmp/filecoin-parents /var/tmp/filecoin-proof-parents
+COPY --from=build /etc/systemd/system/lotus-daemon.service /etc/systemd/system/lotus-daemon.service
+COPY --from=build /etc/systemd/system/lotus-miner.service /etc/systemd/system/lotus-miner.service
+COPY --from=build /var/log/lotus /var/log/lotus
 COPY --chown=ubuntu:ubuntu patch-config.sh patch-config.sh
 
 RUN chown -R ubuntu. /home/ubuntu
 RUN chown -R ubuntu. /var/tmp
+
+RUN systemctl daemon-reload
+RUN systemctl start lotus-daemon
+RUN systemctl enable lotus-daemon
+RUN systemctl start lotus-miner
+RUN systemctl enable lotus-miner
 
 USER ubuntu
 
