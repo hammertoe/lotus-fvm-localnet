@@ -41,9 +41,9 @@ COPY --chown=ubuntu:ubuntu patch-config.sh patch-config.sh
 RUN chown -R ubuntu. /home/ubuntu
 RUN chown -R ubuntu. /var/tmp
 
-RUN ./patch-config.sh
-
 USER ubuntu
+
+RUN ./patch-config.sh
 
 ENV LOTUS_PATH="~/.lotus-local-net"
 ENV LOTUS_MINER_PATH="~/.lotus-miner-local-net"
