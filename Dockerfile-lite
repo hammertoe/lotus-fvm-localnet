@@ -39,8 +39,8 @@ COPY --from=build /var/tmp/filecoin-parents /var/tmp/filecoin-proof-parents
 
 RUN chown -R ubuntu. /home/ubuntu
 RUN chown -R ubuntu. /var/tmp
-RUN sed -i 's/#ListenAddress = "\/ip4\/127.0.0.1\/tcp\/1234\/http"/ListenAddress = "\/ip4\/0.0.0.0\/tcp\/1234\/http"/' ~/.lotus-local-net/config.toml
-RUN sed -i 's/#ListenAddress = "\/ip4\/127.0.0.1\/tcp\/2345\/http"/ListenAddress = "\/ip4\/0.0.0.0\/tcp\/2345\/http"/' ~/.lotus-miner-local-net/config.toml
+RUN sed -i '' -e 's/#ListenAddress = "\/ip4\/127.0.0.1\/tcp\/1234\/http"/ListenAddress = "\/ip4\/0.0.0.0\/tcp\/1234\/http"/' ~/.lotus-local-net/config.toml
+RUN sed -i '' -e 's/#ListenAddress = "\/ip4\/127.0.0.1\/tcp\/2345\/http"/ListenAddress = "\/ip4\/0.0.0.0\/tcp\/2345\/http"/' ~/.lotus-miner-local-net/config.toml
 
 USER ubuntu
 
