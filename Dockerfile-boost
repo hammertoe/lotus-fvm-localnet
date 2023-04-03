@@ -11,10 +11,12 @@ RUN npm_config_legacy_peer_deps=yes npm ci --no-audit --prefix react && \
 FROM ghcr.io/hammertoe/lotus-fvm-localnet-base:latest as builder
 
 COPY --from=react-builder /src/react/build /go/src/react/build
+COPY /boost /boost
+
+WORKDIR /boost
 
 RUN --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/go/pkg/mod \
-      cd boost; \
       make debug booster-http booster-bitswap
 
 ## Test lotus starts
