@@ -1,0 +1,8 @@
+FROM node:16.16-alpine3.15 AS react-builder
+
+WORKDIR /src
+COPY boost/react /src/react
+COPY boost/gql /src/gql
+
+RUN npm_config_legacy_peer_deps=yes npm ci --no-audit --prefix react&& \
+      npm run --prefix react build
