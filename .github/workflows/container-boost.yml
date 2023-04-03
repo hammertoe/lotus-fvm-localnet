@@ -47,7 +47,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          platforms: linux/amd64, linux/arm64
+#          platforms: linux/amd64, linux/arm64
+          platforms: linux/amd64
           file: Dockerfile-boost
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
