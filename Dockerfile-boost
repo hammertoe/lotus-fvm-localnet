@@ -4,5 +4,18 @@ WORKDIR /src
 COPY boost/react /src/react
 COPY boost/gql /src/gql
 
-RUN npm_config_legacy_peer_deps=yes npm ci --no-audit --prefix react&& \
+RUN npm_config_legacy_peer_deps=yes npm ci --no-audit --prefix react && \
       npm run --prefix react build
+      
+#######################################################################      
+FROM ghcr.io/hammertoe/lotus-fvm-localnet-base:latest as builder
+
+COPY --from=react-builder /src/react/build /go/src/react/build
+
+RUN --mount=type=cache,target=/root/.cache/go-build \
+    --mount=type=cache,target=/go/pkg/mod \
+      cd boost; \
+      make debug booster-http booster-bitswap
+
+## Test lotus starts
+RUN lotus -v && lotus-miner -v 
