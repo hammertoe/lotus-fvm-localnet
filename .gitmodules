@@ -5,3 +5,6 @@
 [submodule "go-jsonrpc"]
 	path = go-jsonrpc
 	url = https://github.com/jimpick/go-jsonrpc.git
+[submodule "boost"]
+	path = boost
+	url = https://github.com/hammertoe/boost
